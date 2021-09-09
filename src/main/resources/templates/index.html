@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" type="image/x-icon" th:href="@{/img/logo-blue.png}"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<title>学生成绩</title>
+</head>
+<body>
+	<div class="nk-container">
+		<!-- 头部 -->
+		<header class="bg-dark sticky-top" th:fragment="header">
+			<div class="container">
+				<!-- 导航 -->
+				<nav class="navbar navbar-expand-lg navbar-dark">
+					<!-- logo -->
+					<a class="navbar-brand" th:href="@{/index}"></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<!-- 功能 -->
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item ml-3 btn-group-vertical">
+								<a class="nav-link" th:href="@{/index}">学生成绩管理</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</header>
+
+		<!-- 内容 -->
+		<div class="main">
+			<div class="container">
+				<div class="position-relative">
+					<!-- 筛选条件 -->
+					<ul class="nav nav-tabs mb-3">
+						<li class="nav-item">
+							<a class="nav-link active" href="#">成绩单</a>
+						</li>
+						<button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal" data-target="#publishModal">添加数据</button>
+					</ul>
+
+				</div>
+				<!-- 弹出框 -->
+				<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="publishModalLabel">添加新数据</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="studentName" class="col-form-label">学生姓名：</label>
+										<input type="text" class="form-control" placeholder="请输入学生姓名" required id="studentName">
+									</div>
+									<div class="form-group">
+										<label for="studentId" class="col-form-label">学号：</label>
+										<input type="text" class="form-control" placeholder="请输入学号" required id="studentId">
+									</div>
+									<div class="form-group">
+										<label for="chinese" class="col-form-label">语文成绩：</label>
+										<input type="text" class="form-control" placeholder="请输入语文成绩" required id="chinese">
+									</div>
+									<div class="form-group">
+										<label for="math" class="col-form-label">数学成绩：</label>
+										<input type="text" class="form-control" placeholder="请输入数学成绩" required id="math">
+									</div>
+									<div class="form-group">
+										<label for="english" class="col-form-label">英语成绩：</label>
+										<input type="text" class="form-control" placeholder="请输入英语成绩" required id="english">
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+								<button type="button" class="btn btn-primary" id="publishBtn">添加</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 提示框 -->
+				<div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="hintModalLabel">提示</h5>
+							</div>
+							<div class="modal-body" id="hintBody">
+								添加完毕!
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 列表 -->
+				<ul class="list-unstyled">
+					<li class="media pb-3 pt-3 mb-3 border-bottom" th:each="stu:${students}">
+						<div class="media-body">
+							<h6 class="mt-0 mb-3">
+								<a th:href="@{|/detail/${stu.id}|}" th:utext="'学生：'+${stu.studentName}+'   学号：'+${stu.studentId}">a</a>
+							</h6>
+							<div class="text-muted font-size-12">
+								<ul class="d-inline float-right">
+									<li class="d-inline ml-2">语文 <i th:text="${stu.chinese}">11</i></li>
+									<li class="d-inline ml-2">|</li>
+									<li class="d-inline ml-2">数学 <i th:text="${stu.math}">11</i></li>
+									<li class="d-inline ml-2">|</li>
+									<li class="d-inline ml-2">英语 <i th:text="${stu.english}">11</i></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<!-- 分页 -->
+				<nav class="mt-5" th:if="${page.rows>0}">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>
+						</li>
+						<li th:class="|page-item ${page.current==1?'disabled':''}|">
+							<a class="page-link" th:href="@{${page.path}(current=${page.current-1})}">上一页</a>
+						</li>
+						<li th:class="|page-item ${page.current==i?'active':''}|" th:each="i:${#numbers.sequence(page.from,page.to)}">
+							<a class="page-link" th:href="@{${page.path}(current=${i})}" th:text="${i}">1</a>
+						</li>
+						<li th:class="|page-item ${page.current==page.total?'disabled':''}|">
+							<a class="page-link" th:href="@{${page.path}(current=${page.current+1})}">下一页</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" th:href="@{${page.path}(current=${page.total})}">末页</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+		<!-- 尾部 -->
+		<footer class="bg-dark" th:fragment="footer">
+			<div class="container">
+				<div class="row">
+					<!-- 二维码 -->
+					<div class="col-4 qrcode">
+						<img th:src="@{/img/QRcode.jpg}" class="img-thumbnail" style="width:136px;" />
+					</div>
+					<!-- 公司信息 -->
+					<div class="col-8 detail-info">
+						<div class="row">
+							<div class="col">
+								<ul class="nav">
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">关于我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">联系我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">友情链接</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<ul class="nav btn-group-vertical company-info">
+									<li class="nav-item text-white-50">
+										地址：深圳市南山区桃源街道深圳大学城哈尔滨工业大学校区
+									</li>
+									<li class="nav-item text-white-50">
+										联系方式：0755-26031234(电话)&nbsp;&nbsp;&nbsp;&nbsp;19S054005@stu.hit.edu.cn
+									</li>
+									<li class="nav-item text-white-50">
+										土木与环境工程学院©2021 All rights reserved
+									</li>
+									<li class="nav-item text-white-50">
+										京ICP备14055001号-0 &nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="http://static.nowcoder.com/company/images/res/ghs.png" style="width:18px;" />
+										京公网安备 11010502012345号
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

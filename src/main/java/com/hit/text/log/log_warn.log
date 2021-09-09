@@ -1,0 +1,8 @@
+2021-09-09 09:54:02,960 WARN [http-nio-8080-exec-9] o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver [AbstractHandlerExceptionResolver.java:207] Resolved [org.springframework.dao.DataIntegrityViolationException: 
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Column 'cacheControl' cannot be null
+### The error may exist in file [E:\workspace_idea\text\target\classes\mapper\http-mapper.xml]
+### The error may involve com.hit.text.dao.HttpMapper.insertHttp-Inline
+### The error occurred while setting parameters
+### SQL: insert into http (          `time`,`ip`,`port`,`url`,`protocol`,`connection`,`cacheControl`,`acceptEncoding`,`accept`,`target`      )         values (?,?,?,?,?,?,?,?,?,?)
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Column 'cacheControl' cannot be null
+; Column 'cacheControl' cannot be null; nested exception is java.sql.SQLIntegrityConstraintViolationException: Column 'cacheControl' cannot be null]

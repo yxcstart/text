@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hit.text.dao.StudentMapper">
+
+    <sql id="selectFields">
+        `id`
+        ,`student_name`,`student_id`,`chinese`,`math`,`english`
+    </sql>
+    <sql id="insertFields">
+        `student_name`
+        ,`student_id`,`chinese`,`math`,`english`,`status`
+    </sql>
+
+    <select id="selectById" resultType="Student">
+        select
+        <include refid="selectFields"></include>
+        from score
+        where id=#{id}
+        and status=0
+    </select>
+    <select id="queryStudents" resultType="Student">
+        select <include refid="selectFields"></include>
+        from score
+        where status=0
+        order by id
+        limit #{offset},#{limit}
+    </select>
+    <select id="findStudentRows" resultType="int">
+        select count(id)
+        from score
+        where status=0
+    </select>
+    <select id="selectByName" resultType="Student">
+        select
+        <include refid="selectFields"></include>
+        from score
+        where student_name=#{studentName}
+        and status=0
+    </select>
+    <select id="selectByStudentId" resultType="Student">
+        select
+        <include refid="selectFields"></include>
+        from score
+        where student_id=#{studentId}
+        and status=0
+    </select>
+    <insert id="insertStudent" parameterType="Student" keyProperty="id">
+        insert into score (<include refid="insertFields"></include>)
+        values (#{studentName},#{studentId},#{chinese},#{math},#{english},#{status})
+    </insert>
+
+    <update id="updateStatus">
+        update score
+        set status = #{status}
+        where id = #{id}
+    </update>
+    <update id="updateChinese">
+        update score
+        set chinese = #{chinese}
+        where id = #{id}
+    </update>
+    <update id="updateMath">
+        update score
+        set math = #{math}
+        where id = #{id}
+    </update>
+    <update id="updateEnglish">
+        update score
+        set english = #{english}
+        where id = #{id}
+    </update>
+
+</mapper>

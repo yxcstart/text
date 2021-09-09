@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" type="image/x-icon" th:href="@{/img/logo-blue.png}"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/discuss-detail.css}" />
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+	<title>学生成绩详情</title>
+</head>
+<body>
+	<div class="nk-container">
+		<!-- 头部 -->
+		<header class="bg-dark sticky-top" th:replace="index::header">
+		</header>
+		<!-- 内容 -->
+		<div class="main">
+			<div class="container">
+				<h6 class="mb-4">
+					<span th:utext="'学生：'+${student.studentName}"></span><br>
+					<span th:utext="'学号：'+${student.studentId}"></span>
+					<div class="float-right">
+						<button type="button" id="delete" onclick="deleteStudent()" class="btn btn-danger btn-sm">删除</button>
+						<input type="hidden" id="deleteId" th:value="${student.id}">
+					</div>
+				</h6>
+			</div>
+			<div class="container mt-3">
+				<div class="row">
+					<div class="col-8">
+						<h6><b class="square"></b> 修改成绩</h6>
+					</div>
+				</div>
+				<ul class="list-unstyled mt-4">
+					<form class="mt-5" method="post" th:action="@{|/update/${student.id}|}">
+						<div class="form-group">
+							<label for="chinese" class="col-form-label">语文成绩：</label>
+							<input type="text" class="form-control" name="chinese" placeholder=""
+								   th:value="${student.chinese}" required id="chinese">
+						</div>
+						<div class="form-group">
+							<label for="math" class="col-form-label">数学成绩：</label>
+							<input type="text" class="form-control" name="math" placeholder=""
+								   th:value="${student.math}" required id="math">
+						</div>
+						<div class="form-group">
+							<label for="english" class="col-form-label">英语成绩：</label>
+							<input type="text" class="form-control" name="english" placeholder=""
+								   th:value="${student.english}" required id="english">
+						</div>
+						<div class="form-group row mt-4" >
+							<button type="submit" class="btn btn-info text-white form-control">立即修改</button>
+						</div>
+					</form>
+				</ul>
+			</div>
+		</div>
+
+		<!-- 尾部 -->
+		<footer class="bg-dark" th:replace="index::footer">
+		</footer>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script>
+		function deleteStudent() {
+			var stuId=$("#deleteId").val();
+			window.location=CONTEXT_PATH+"/delete/"+stuId;
+		}
+	</script>
+</body>
+</html>
