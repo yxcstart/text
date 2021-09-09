@@ -1,5 +1,19 @@
 # 工程简介
 本项目基于springboot开发，是一个简易的学生成绩管理系统，本项目通过aop动态切面编程的方式，拦截并且记录HTTP流量数据以及查询数据库的sql语句
+项目的学生信息表score的建表语句如下
+```MySQL
+create table score
+(
+    id           int auto_increment
+        primary key,
+    student_name varchar(50) not null,
+    student_id   varchar(50) not null,
+    chinese      int         null,
+    math         int         null,
+    english      int         null,
+    status       int         null
+);
+```
 
 ![image](https://github.com/yxcstart/text/blob/master/img/%E9%A6%96%E9%A1%B5.png)
 首页
@@ -51,3 +65,6 @@ sql语句拦截记录的数据库效果图如下：
 
 于此同时用户访问的每一个方法，执行的所有sql语句都用日志文件记录了下来
 ![image](https://github.com/yxcstart/text/blob/master/img/%E6%B5%81%E9%87%8F%E4%BB%A5%E5%8F%8Asql%E6%97%A5%E5%BF%97.png)
+
+# 运行提示
+需要修改application.properties文件当中的数据库连接为你自己的数据库，然后建三个表，建表语句如上
