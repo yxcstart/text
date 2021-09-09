@@ -27,6 +27,8 @@ create table score
 # 基于aop的流量数据拦截和sql语句记录
 通过面向切面编程实现的流量拦截，sql语句是通过自定义注解然后基于aop实现<br>
 我把流量数据和sql语句都存放到了数据库当中，于此同时也通过日志文件记录了两者的信息<br>
+## 关于流量数据拦截的aop实现可以针对性看/src/main/java/com/hit/text/aspect/ServiceLogAspect.java文件<br>
+## 关于sql语句拦截记录的aop实现可以针对性看`/src/main/java/com/hit/text/controller/advice/MyAdvice.java`文件 `/src/main/java/com/hit/text/annotation/ModelSubmit.java`<br>文件,`/src/main/java/com/hit/text/utils/SqlUtils`文件<br>
 http的建表语句如下<br>
 ps：可以记录很多流量数据，我这里只选择了部分字段信息<br>
 ```MySQL
