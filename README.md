@@ -49,4 +49,5 @@ create table sqlstatement
 sql语句拦截记录的数据库效果图如下：
 ![image](https://github.com/yxcstart/text/blob/master/img/sql%E8%AF%AD%E5%8F%A5%E6%95%B0%E6%8D%AE%E5%BA%93.png)
 
-
+于此同时用户访问的每一个方法，执行的所有sql语句都用日志文件记录了下来
+![image](https://github.com/yxcstart/text/blob/master/img/%E6%B5%81%E9%87%8F%E4%BB%A5%E5%8F%8Asql%E6%97%A5%E5%BF%97.png)
